@@ -10,10 +10,111 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String    @default(auto()) @id@ db.ObjectId
-  email String  @unique
-  password String?
-  role String
-  name  String
+model users {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  username       String        @unique
+  email          String
+  password       String?
+  avatar         String
+  firstName      String
+  lastName       String
+  role           Role          @default(Student)
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+  Class          Class?        @relation(fields: [classId], references: [id])
+  classId        String?       @db.ObjectId
+  TeacherClass   TeacherClass? @relation(fields: [teacherClassId], references: [id])
+  teacherClassId String?       @db.ObjectId
+  Subject        Subject?      @relation(fields: [subjectId], references: [id])
+  subjectId      String?       @db.ObjectId
+  Attendance     Attendance?   @relation(fields: [attendanceId], references: [id])
+  attendanceId   String?       @db.ObjectId
+}
+
+enum Role {
+  Operator
+  Admin
+  Teacher
+  Student
+}
+
+model Class {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  grade          Int
+  number         Int
+  students       users[]
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+  TeacherClass   TeacherClass? @relation(fields: [teacherClassId], references: [id])
+  teacherClassId String?       @db.ObjectId
+  Schedules      Schedules[]
+}
+
+model TeacherClass {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  classes   Class[]
+  teacher   users[]
+  teacherID String[] @db.ObjectId
+  totalSlot Int
+}
+
+model Subject {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  teacher   users[]
+  grade     Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Slots     Slots[]
+}
+
+model Slots {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  subject       Subject      @relation(fields: [subjectId], references: [id])
+  subjectId     String[]     @db.ObjectId
+  period        Int
+  note          String
+  date          DateTime     @default(now())
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+  Attendance    Attendance?  @relation(fields: [attendanceId], references: [id])
+  attendanceId  String?      @db.ObjectId
+  DaySchedule   DaySchedule? @relation(fields: [dayScheduleId], references: [id])
+  dayScheduleId String?      @db.ObjectId
+}
+
+model Attendance {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  student   users[]
+  slot      Slots[]
+  status    String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+enum DayName {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model DaySchedule {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  day       DayName
+  slots     Slots[]
+  Schedules Schedules[]
+}
+
+model Schedules {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  class         Class       @relation(fields: [classID], references: [id])
+  classID       String[]    @db.ObjectId
+  daySchedule   DaySchedule @relation(fields: [dayScheduleID], references: [id])
+  dayScheduleID String[]    @db.ObjectId
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
 }
