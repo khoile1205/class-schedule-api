@@ -18,6 +18,8 @@ model users {
   avatar         String
   firstName      String
   lastName       String
+  location       String
+  phoneNumber    String?
   role           Role          @default(Student)
   createdAt      DateTime      @default(now()) @map("created_at")
   updatedAt      DateTime      @updatedAt @map("updated_at")
@@ -29,6 +31,16 @@ model users {
   subjectId      String?       @db.ObjectId
   Attendance     Attendance?   @relation(fields: [attendanceId], references: [id])
   attendanceId   String?       @db.ObjectId
+  userToken      userToken[]
+}
+
+model userToken {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  user          string?    @relation(fields: [user_id], references: [id])
+  user_id       String   @db.ObjectId
+  refresh_token String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 }
 
 enum Role {
