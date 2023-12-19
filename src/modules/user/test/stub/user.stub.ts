@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { Role } from "@/common/enums";
 import { UserEntity } from "../../entity";
 
 export const createUserStub = (): UserEntity => {
@@ -12,6 +12,6 @@ export const createUserStub = (): UserEntity => {
 		phoneNumber: "937-299-7998 x8043",
 		avatar: "https://avatars.githubusercontent.com/u/73887643",
 		password: "$2a$12$mrOMgGZ4TLx8xLpqjtXdqeBmlClhAoz5YBuKJPbk.L4o2urMFaX7G",
-		role: Role.Admin,
+		role: Role[Role.Admin],
 	};
 };

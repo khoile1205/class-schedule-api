@@ -1,4 +1,3 @@
-import { Role } from "@prisma/client";
 import { ObjectId } from "mongoose";
 import { User } from "./mongo.schema/user.schema";
 

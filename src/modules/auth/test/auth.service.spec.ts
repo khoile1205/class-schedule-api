@@ -13,7 +13,7 @@ import { UserTokenRepository } from "../../userToken/user.token.repository";
 import { UserToken } from "../../userToken/entity";
 import { createUserStub } from "@/modules/user/test/stub/user.stub";
 import { mockJWTService } from "./mock/jwt.mock";
-import { Role } from "@prisma/client";
+import { Role } from "@/common/enums";
 
 describe("AuthService", () => {
 	let authService: AuthService;
@@ -124,9 +124,9 @@ describe("AuthService", () => {
 			jest.spyOn(jwtService, "sign").mockReturnValue("mockAccessToken");
 
 			// Act
-			const mockPayload = {
+			const mockPayload: JWTPayload = {
 				username: "test",
-				role: Role.Admin,
+				role: Role[Role.Admin],
 				id: "123",
 			};
 

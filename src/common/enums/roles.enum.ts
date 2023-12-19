@@ -1,6 +1,6 @@
-export enum Roles {
-	Operator,
-	Admin,
-	Teacher,
-	Student,
+export enum Role {
+	Operator = "Operator",
+	Admin = "Admin",
+	Teacher = "Teacher",
+	Student = "Student",
 }
