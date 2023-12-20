@@ -1,18 +1,17 @@
-import configuration from "@/configuration";
+import { User } from "@/modules/user/entity";
+import { createUserStub } from "@/modules/user/test/stub/user.stub";
+import { UserRepository } from "@/modules/user/user.repository";
+import { UserService } from "@/modules/user/user.service";
+import { UserToken } from "@/modules/userToken/entity";
+import { UserTokenRepository } from "@/modules/userToken/user.token.repository";
+import { UserTokenService } from "@/modules/userToken/user.token.service";
 import { UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { MongooseModule, getModelToken } from "@nestjs/mongoose";
+import { getModelToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
-import * as bcrypt from "bcrypt";
-import { User, UserEntity } from "../../user/entity";
-import { UserService } from "../../user/user.service";
-import { UserTokenService } from "../../userToken/user.token.service";
 import { AuthService } from "../auth.service";
-import { UserRepository } from "../../user/user.repository";
-import { UserTokenRepository } from "../../userToken/user.token.repository";
-import { UserToken } from "../../userToken/entity";
-import { createUserStub } from "@/modules/user/test/stub/user.stub";
 import { mockJWTService } from "./mock/jwt.mock";
+import * as bcrypt from "bcrypt";
 import { Role } from "@/common/enums";
 
 describe("AuthService", () => {
@@ -126,7 +125,7 @@ describe("AuthService", () => {
 			// Act
 			const mockPayload: JWTPayload = {
 				username: "test",
-				role: Role[Role.Admin],
+				role: Role.Admin,
 				id: "123",
 			};
 

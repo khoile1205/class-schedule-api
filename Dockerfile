@@ -11,6 +11,9 @@ COPY . .
 # Install app dependencies
 RUN npm install
 
+#Run Prisma 
+RUN npx prisma generate
+
 # Creates a "dist" folder with the production build
 RUN npm run build
 

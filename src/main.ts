@@ -13,8 +13,8 @@ async function bootstrap() {
 	app.use(passport.initialize());
 
 	const swaggerConfig = new DocumentBuilder()
-		.setTitle("Swagger Class Schedule API")
-		.setDescription("The Class Schedule API description")
+		.setTitle(AppString.swaggerTitle)
+		.setDescription(AppString.swaggerDescription)
 		.setVersion("1.0")
 		.addBearerAuth()
 		.build();

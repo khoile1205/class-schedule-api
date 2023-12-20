@@ -1,4 +1,3 @@
-import { INestApplication, UnauthorizedException } from "@nestjs/common";
 import { AuthController } from "../auth.controller";
 import { AuthService } from "../auth.service";
 import { Test } from "@nestjs/testing";
@@ -6,11 +5,9 @@ import { LocalStrategy, JWTRefreshTokenStrategy } from "@/common/strategy";
 import { PassportModule } from "@nestjs/passport";
 import { UserModule } from "../../user/user.module";
 import { UserTokenModule } from "../../userToken/user.token.module";
-import { UserEntity } from "../../user/entity";
 import configuration from "@/configuration";
 import { MongooseModule } from "@nestjs/mongoose";
 import { JwtModule } from "@nestjs/jwt";
-import { UserTokenEntity } from "../../userToken/entity";
 
 describe("AuthController", () => {
 	let authController: AuthController;

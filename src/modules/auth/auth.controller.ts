@@ -1,17 +1,5 @@
-import {
-	Body,
-	Controller,
-	Get,
-	HttpStatus,
-	Next,
-	Post,
-	Req,
-	Res,
-	UnauthorizedException,
-	UseGuards,
-} from "@nestjs/common";
-import { NextFunction, Request, Response } from "express";
-import baseResponse from "@/util/baseResponse";
+import { Controller, HttpStatus, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Request, Response } from "express";
 import { LocalGuard } from "@/common/guards/local.guard";
 import { SignInDTO } from "./dto/sign.in.dto";
 import { UserEntity } from "../user/entity/user";
@@ -20,12 +8,10 @@ import {
 	ApiAcceptedResponse,
 	ApiBearerAuth,
 	ApiBody,
-	ApiResponse,
 	ApiTags,
 	ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
 import { JWTRefreshTokenGuard } from "@/common/guards/refresh-token.guard";
-import { UserTokenService } from "../userToken/user.token.service";
 import AppString from "@/appString/AppString";
 import { SignInAcceptedResponseDTO, SignInRejectedResponseDTO } from "./dto/sign-in.response.dto";
 
