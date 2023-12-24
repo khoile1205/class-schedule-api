@@ -62,7 +62,7 @@ export class AuthController {
 
 		const access_token = this._authService.generateAccessToken(payload);
 
-		res.status(HttpStatus.ACCEPTED);
+		res.status(HttpStatus.OK);
 
 		return {
 			access_token,

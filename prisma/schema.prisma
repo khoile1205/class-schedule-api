@@ -31,10 +31,10 @@ model users {
   subjectId      String?       @db.ObjectId
   Attendance     Attendance?   @relation(fields: [attendanceId], references: [id])
   attendanceId   String?       @db.ObjectId
-  userToken      userToken[]
+  userToken      userTokens[]
 }
 
-model userToken {
+model userTokens {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   user          users?   @relation(fields: [user_id], references: [id])
   user_id       String?  @db.ObjectId

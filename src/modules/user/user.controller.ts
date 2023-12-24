@@ -1,10 +1,10 @@
-import { Controller, Get, Param, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Param, Req, Res, UseGuards } from "@nestjs/common";
 import { Request, Response } from "express";
 import { UserService } from "./user.service";
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { JWTAccessTokenGuard } from "@/common/guards/access-token.guard";
 
-@Controller("user")
+@Controller("users")
 @ApiBearerAuth()
 @UseGuards(JWTAccessTokenGuard)
 @ApiTags("User")
@@ -14,15 +14,13 @@ export class UserController {
 		this._userService = userService;
 	}
 
-	@Get("/:username")
-	@ApiResponse({ status: 201, description: "The record has been successfully created." })
-	async findByUsername(
-		@Param("username") username: string,
-		@Req() req: Request,
-		@Res() res: Response
-	) {
-		const result = await this._userService.getUserByUsername(username);
+	@Get("/profile")
+	@ApiResponse({ status: 200, description: "" })
+	async getUserInfoByToken(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+		res.status(HttpStatus.OK);
+		
+		const { user } = req;
 
-		res.status(201).json({ result });
+		return user;
 	}
 }
